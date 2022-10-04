@@ -14,12 +14,12 @@ class Interesado extends Connection
             echo $th->getMessage();
         }
     }
-    public static function obtenerDatoId($id)
+    public static function obtenerDatoId($id_interesado)
     {
         try {
             $sql = "SELECT * FROM interesado WHERE id = :id";
             $stmt = Connection::getConnection()->prepare($sql);
-            $stmt->bindParam(':id', $id);
+            $stmt->bindParam(':id_interesado', $id_interesado);
             $stmt->execute();
             $result = $stmt->fetch();
             return $result;
@@ -30,7 +30,7 @@ class Interesado extends Connection
     public static function guardarDato($data)
     {
         try {
-            $sql = "INSERT INTO interesado (nombre, apellido, telefono, email, direccion, numero, dni, localidad) VALUES (:nombre, :apellido, :telefono, :email, :direccion, :numero, :dni, :localidad)";
+            $sql = "INSERT INTO interesado(nombre, apellido, telefono, email, direccion, numero, dni, localidad) VALUES (:nombre, :apellido, :telefono, :email, :direccion, :numero, :dni, :localidad)";
             $stmt = Connection::getConnection()->prepare($sql);
             $stmt->bindParam(':nombre', $data['nombre']);
             $stmt->bindParam(':apellido', $data['apellido']);
@@ -59,19 +59,19 @@ class Interesado extends Connection
             $stmt->bindParam(':numero', $data['numero']);
             $stmt->bindParam(':dni', $data['dni']);
             $stmt->bindParam(':localidad', $data['localidad']);
-            $stmt->bindParam(':id', $data['id']);
+            $stmt->bindParam(':id_interesado', $data['id_interesado']);
             $stmt->execute();
             return true;
         } catch (PDOException $th) {
             echo $th->getMessage();
         }
     }
-    public static function eliminarDato($id)
+    public static function eliminarDato($id_interesado)
     {
         try {
-            $sql = "DELETE FROM interesado WHERE id = :id";
+            $sql = "DELETE FROM interesado WHERE id_interesado = :id_interesado";
             $stmt = Connection::getConnection()->prepare($sql);
-            $stmt->bindParam(':id', $id);
+            $stmt->bindParam(':id_interesado', $id_interesado);
             $stmt->execute();
             return true;
         } catch (PDOException $th) {

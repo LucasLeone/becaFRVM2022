@@ -2,11 +2,6 @@
 class Connection
 {
 
-    public $contraseña = "admin1234";
-    public $usuario = "postgres";
-    public $nombreBaseDeDatos = "beca";
-    public $rutaServidor = "127.0.0.1";
-    public $puerto = "5432";
     public $connect;
     
     public static function getConnection()

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Beca</title>
 
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
@@ -16,29 +16,29 @@
                 <h5>Registrar Interesado</h5>
                 <hr />
                 <form action="javascript:void(0);" onsubmit="app.guardar()">
-                    <input type="hidden" id="id" />
-                    <label for="nombres">Nombre</label>
+                    <input type="hidden" id="id_interesado" />
+                    <label for="nombre">Nombre</label>
                     <input type="text" class="form-control" id="nombre" placeholder="Nombre" autofocus
                         required />
-                    <label for="nombres">Apellido</label>
+                    <label for="apellido">Apellido</label>
                     <input type="text" class="form-control" id="apellido" placeholder="Nombre" autofocus
                         required />
-                    <label for="nombres">Teléfono</label>
+                    <label for="telefono">Teléfono</label>
                     <input type="text" class="form-control" id="telefono" placeholder="Telefono" autofocus
                         required />
                     <label for="email">Email</label>
                     <input type="email" class="form-control" id="email" placeholder="email@email.com" 
                         required />
-                    <label for="email">Dirección</label>
+                    <label for="direccion">Dirección</label>
                     <input type="text" class="form-control" id="direccion" placeholder="Dirección" 
                         required />
-                    <label for="email">Número</label>
+                    <label for="numero">Número</label>
                     <input type="number" class="form-control" id="numero" placeholder="Número" 
                         required />
-                    <label for="email">Localidad</label>
+                    <label for="localidad">Localidad</label>
                     <input type="text" class="form-control" id="localidad" placeholder="Localidad" 
                         required />
-                    <label for="email">DNI</label>
+                    <label for="dni">DNI</label>
                     <input type="text" class="form-control" id="dni" placeholder="DNI" 
                         required />
                     <div class="mt-2">
@@ -49,7 +49,7 @@
                 <br />
                 <h5>Listado Interesado</h5>
                 <hr />
-                <table class="table">
+                <table class="table text-center">
                     <thead>
                         <tr>
                             <th>#</th>
