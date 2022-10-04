@@ -8,7 +8,7 @@ class Interesado extends Connection
             $sql = "SELECT * FROM public.interesado";
             $stmt = Connection::getConnection()->prepare($sql);
             $stmt->execute();
-            $result = $stmt->fetchAll();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
             return $result;
         } catch (PDOException $th) {
             echo $th->getMessage();

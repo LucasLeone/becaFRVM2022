@@ -9,7 +9,7 @@ const app = new function() {
                 data.forEach((item) => {
                     this.tbody.innerHTML += `
                     <tr>
-                        <td>${item.id}</td>
+                        <td>${item.id_interesado}</td>
                         <td>${item.nombre}</td>
                         <td>${item.apellido}</td>
                         <td>${item.telefono}</td>

@@ -13,7 +13,7 @@ class Connection
     {
         try {
             $connection = new Connection();
-            $connection->connect = new PDO("pgsql:host=$rutaServidor;port=$puerto;dbname=$nombreBaseDeDatos", $usuario, $contraseña);
+            $connection->connect = new PDO('pgsql:host=127.0.0.1;dbname=beca', 'postgres', 'admin1234');
             $connection->connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             return $connection->connect;
         } catch (Exception $e) {
