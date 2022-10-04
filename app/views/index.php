@@ -15,7 +15,7 @@
             <div class="col-sm-10">
                 <h5>Registrar Interesado</h5>
                 <hr />
-                <form action="javascript:void(0);" onsubmit="app.guardar()">
+                <form action="javascript:void(0);" onsubmit="app.guardar()" method='GET'>
                     <input type="hidden" id="id_interesado" />
                     <label for="nombre">Nombre</label>
                     <input type="text" class="form-control" id="nombre" placeholder="Nombre" autofocus

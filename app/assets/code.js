@@ -30,17 +30,16 @@ const app = new function() {
     };
     this.guardar = () => {
         var form = new FormData();
-        form.append("nombre", this.nombre);
-        form.append("apellido", this.apellido);
-        form.append("telefono", this.telefono);
-        form.append("email", this.email);
-        form.append("direccion", this.direccion);
-        form.append("direccion", this.direccion);
-        form.append("numero", this.numero);
-        form.append("localidad", this.localidad);
-        form.append("dni", this.dni);
-        form.append("id", this.id);
-        if (this.id === "") {
+        form.append("nombre", document.getElementById("nombre").value);
+        form.append("apellido", document.getElementById("apellido").value);
+        form.append("telefono", document.getElementById("telefono").value);
+        form.append("email", document.getElementById("email").value);
+        form.append("direccion", document.getElementById("direccion").value);
+        form.append("numero", document.getElementById("numero").value);
+        form.append("localidad", document.getElementById("localidad").value);
+        form.append("dni", document.getElementById("dni").value);
+        form.append("id_interesado", document.getElementById("id_interesado").value);
+        if (form.get("id_interesado") === "") {
             fetch("../controllers/guardar.php", {
                 method: "POST",
                 body: form,
@@ -102,15 +101,15 @@ const app = new function() {
             .catch((error) => console.log(error));
     }
     this.limpiar = () => {
-        this.id_interesado.value = "";
-        this.nombre.value = "";
-        this.apellido.value = "";
-        this.telefono.value = "";
-        this.email.value = "";
-        this.direccion.value = "";
-        this.numero.value = "";
-        this.localidad.value = "";
-        this.dni.value = "";
+        document.getElementById("nombre").value = "";
+        document.getElementById("apellido").value = "";
+        document.getElementById("telefono").value = "";
+        document.getElementById("email").value = "";
+        document.getElementById("direccion").value = "";
+        document.getElementById("numero").value = "";
+        document.getElementById("localidad").value = "";
+        document.getElementById("dni").value = "";
+        document.getElementById("id_interesado").value = "";
       };
 }();
 app.listado();
