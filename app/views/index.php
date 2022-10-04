@@ -15,34 +15,36 @@
             <div class="col-sm-10">
                 <h5>Registrar Interesado</h5>
                 <hr />
-                <form action="javascript:void(0);" onsubmit="app.guardar()" method='GET'>
-                    <input type="hidden" id="id_interesado" />
-                    <label for="nombre">Nombre</label>
-                    <input type="text" class="form-control" id="nombre" placeholder="Nombre" autofocus
-                        required />
-                    <label for="apellido">Apellido</label>
-                    <input type="text" class="form-control" id="apellido" placeholder="Nombre" autofocus
-                        required />
-                    <label for="telefono">Teléfono</label>
-                    <input type="text" class="form-control" id="telefono" placeholder="Telefono" autofocus
-                        required />
-                    <label for="email">Email</label>
-                    <input type="email" class="form-control" id="email" placeholder="email@email.com" 
-                        required />
-                    <label for="direccion">Dirección</label>
-                    <input type="text" class="form-control" id="direccion" placeholder="Dirección" 
-                        required />
-                    <label for="numero">Número</label>
-                    <input type="number" class="form-control" id="numero" placeholder="Número" 
-                        required />
-                    <label for="localidad">Localidad</label>
-                    <input type="text" class="form-control" id="localidad" placeholder="Localidad" 
-                        required />
-                    <label for="dni">DNI</label>
-                    <input type="text" class="form-control" id="dni" placeholder="DNI" 
-                        required />
-                    <div class="mt-2">
-                        <button type="submit" class="btn btn-primary">Guardar</button>
+                <form action="javascript:void(0);" onsubmit="app.guardar()">
+                    <div class="inputs" style="display: grid; grid-template-columns: .1fr 1fr; grid-gap: 5px; align-items: center;">
+                        <input type="hidden" id="id_interesado" />
+                        <label for="nombre">Nombre</label>
+                        <input type="text" class="form-control" id="nombre" placeholder="Nombre" autofocus
+                            required />
+                        <label for="apellido">Apellido</label>
+                        <input type="text" class="form-control" id="apellido" placeholder="Nombre" autofocus
+                            required />
+                        <label for="telefono">Teléfono</label>
+                        <input type="text" class="form-control" id="telefono" placeholder="Telefono" autofocus
+                            required />
+                        <label for="email">Email</label>
+                        <input type="email" class="form-control" id="email" placeholder="email@email.com" 
+                            required />
+                        <label for="direccion">Dirección</label>
+                        <input type="text" class="form-control" id="direccion" placeholder="Dirección" 
+                            required />
+                        <label for="numero">Número</label>
+                        <input type="number" class="form-control" id="numero" placeholder="Número" 
+                            required />
+                        <label for="localidad">Localidad</label>
+                        <input type="text" class="form-control" id="localidad" placeholder="Localidad" 
+                            required />
+                        <label for="dni">DNI</label>
+                        <input type="text" class="form-control" id="dni" placeholder="DNI" 
+                            required />
+                    </div>
+                    <div class="mt-2 d-flex">
+                        <button type="submit" class="btn btn-primary me-1">Guardar</button>
                         <button type="reset" class="btn btn-danger">Cancelar</button>
                     </div>
                 </form>
@@ -61,6 +63,7 @@
                             <th>Número</th>
                             <th>Localidad</th>
                             <th>DNI</th>
+                            <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody id="tbody"></tbody>
