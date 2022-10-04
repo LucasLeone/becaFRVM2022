@@ -22,7 +22,7 @@
                         <input type="text" class="form-control" id="nombre" placeholder="Nombre" autofocus
                             required />
                         <label for="apellido">Apellido</label>
-                        <input type="text" class="form-control" id="apellido" placeholder="Nombre" autofocus
+                        <input type="text" class="form-control" id="apellido" placeholder="Apellido" autofocus
                             required />
                         <label for="telefono">Teléfono</label>
                         <input type="text" class="form-control" id="telefono" placeholder="Telefono" autofocus

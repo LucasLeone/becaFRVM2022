@@ -74,15 +74,14 @@ const app = new function() {
         })
             .then((res) => res.json())
             .then((data) => {
-                this.id_interesado = data.id_interesado;
-                this.nombre = data.nombre;
-                this.apellido = data.apellido;
-                this.telefono = data.telefono;
-                this.email = data.email;
-                this.direccion = data.direccion;
-                this.numero = data.numero;
-                this.dni = data.dni;
-                this.localidad = data.localidad;
+                document.getElementById("nombre").value = data.nombre;
+                document.getElementById("apellido").value = data.apellido;
+                document.getElementById("telefono").value = data.telefono;
+                document.getElementById("email").value = data.email;
+                document.getElementById("direccion").value = data.direccion;
+                document.getElementById("numero").value = data.numero;
+                document.getElementById("localidad").value = data.localidad;
+                document.getElementById("dni").value = data.dni;
             })
             .catch((error) => console.log(error));
     };

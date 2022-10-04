@@ -14,12 +14,12 @@ class Interesado extends Connection
             echo $th->getMessage();
         }
     }
-    public static function obtenerDatoId($id_interesado)
+    public static function obtenerDatoId($id)
     {
         try {
             $sql = "SELECT * FROM interesado WHERE id = :id";
             $stmt = Connection::getConnection()->prepare($sql);
-            $stmt->bindParam(':id_interesado', $id_interesado);
+            $stmt->bindParam(':id', $id);
             $stmt->execute();
             $result = $stmt->fetch();
             return $result;
