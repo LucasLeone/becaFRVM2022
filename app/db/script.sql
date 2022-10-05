@@ -10,7 +10,11 @@ CREATE TABLE IF NOT EXISTS public.interesado
     dni character varying COLLATE pg_catalog."default",
     localidad character varying COLLATE pg_catalog."default",
     fecharegistro date,
-    curso_fk integer,
+    CONSTRAINT curso_fk FOREIGN KEY (curso_fk)
+        REFERENCES public.curso (id_curso) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+        NOT VALID,
     CONSTRAINT interesado_pkey PRIMARY KEY (id_interesado)
 )
 WITH (

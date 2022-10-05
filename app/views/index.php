@@ -11,37 +11,60 @@
 </head>
 <body>
     <div class="container-fluid">
+        <!-- INTERESADOS -->
         <div class="row justify-content-center p-5">
             <div class="col-sm-10">
                 <h5>Registrar Interesado</h5>
                 <hr />
                 <form action="javascript:void(0);" onsubmit="app.guardar()">
-                    <div class="inputs" style="display: grid; grid-template-columns: .1fr 1fr; grid-gap: 5px; align-items: center;">
+                    <div class="inputs" style="display: grid; grid-template-columns: 1fr 1fr; grid-gap: 5px; align-items: center;">
                         <input type="hidden" id="id_interesado" />
-                        <label for="nombre">Nombre</label>
-                        <input type="text" class="form-control" id="nombre" placeholder="Nombre" autofocus
-                            required />
-                        <label for="apellido">Apellido</label>
-                        <input type="text" class="form-control" id="apellido" placeholder="Apellido" autofocus
-                            required />
-                        <label for="telefono">Teléfono</label>
-                        <input type="text" class="form-control" id="telefono" placeholder="Telefono" autofocus
-                            required />
-                        <label for="email">Email</label>
-                        <input type="email" class="form-control" id="email" placeholder="email@email.com" 
-                            required />
-                        <label for="direccion">Dirección</label>
-                        <input type="text" class="form-control" id="direccion" placeholder="Dirección" 
-                            required />
-                        <label for="numero">Número</label>
-                        <input type="number" class="form-control" id="numero" placeholder="Número" 
-                            required />
-                        <label for="localidad">Localidad</label>
-                        <input type="text" class="form-control" id="localidad" placeholder="Localidad" 
-                            required />
-                        <label for="dni">DNI</label>
-                        <input type="text" class="form-control" id="dni" placeholder="DNI" 
-                            required />
+                        <div class="form-group">
+                            <label for="nombre">Nombre</label>
+                            <input type="text" class="form-control" id="nombre" placeholder="Nombre" autofocus
+                                required />
+                        </div>
+                        <div class="form-group">
+                            <label for="apellido">Apellido</label>
+                            <input type="text" class="form-control" id="apellido" placeholder="Apellido" autofocus
+                                required />
+                        </div>
+                        <div class="form-group">
+                            <label for="telefono">Teléfono</label>
+                            <input type="text" class="form-control" id="telefono" placeholder="Telefono" autofocus
+                                required />
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" id="email" placeholder="email@email.com" 
+                                required />
+                        </div>
+                        <div class="form-group">
+                            <label for="direccion">Dirección</label>
+                            <input type="text" class="form-control" id="direccion" placeholder="Dirección" 
+                                required />
+                        </div>
+                        <div class="form-group">
+                            <label for="numero">Número</label>
+                            <input type="number" class="form-control" id="numero" placeholder="Número" 
+                                required />
+                        </div>
+                        <div class="form-group">
+                            <label for="localidad">Localidad</label>
+                            <input type="text" class="form-control" id="localidad" placeholder="Localidad" 
+                                required />
+                        </div>
+                        <div class="form-group">
+                            <label for="dni">DNI</label>
+                            <input type="text" class="form-control" id="dni" placeholder="DNI" 
+                                required />
+                        </div>
+                        <div class="form-group d-grid">
+                            <label for="cursos_interes">Cursos interes</label>
+                            <select name="cursos_interes" id="cursos_interes" multiple>
+                                <option value="hola">hola</option>
+                            </select>
+                        </div>
                     </div>
                     <div class="mt-2 d-flex">
                         <button type="submit" class="btn btn-primary me-1">Guardar</button>
@@ -71,8 +94,65 @@
                 </table>
             </div>
         </div>
+        <!-- CURSOS -->
+        <div class="row justify-content-center p-5">
+            <div class="col-sm-10">
+                <h5>Registrar Curso</h5>
+                <hr />
+                <form action="javascript:void(0);" onsubmit="app_cursos.guardar()">
+                    <div class="inputs" style="display: grid; grid-template-columns: 1fr 1fr; grid-gap: 5px; align-items: center;">
+                        <input type="hidden" id="id_curso" />
+                        <div class="form-group">
+                            <label for="nombre_curso">Nombre</label>
+                            <input type="text" class="form-control" id="nombre_curso" placeholder="Nombre" autofocus
+                                required />
+                        </div>
+                    </div>
+                    <div class="mt-2 d-flex">
+                        <button type="submit" class="btn btn-primary me-1">Guardar</button>
+                        <button type="reset" class="btn btn-danger">Cancelar</button>
+                    </div>
+                </form>
+                <br />
+                <h5>Listado Cursos</h5>
+                <hr />
+                <table class="table text-center">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nombre</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody_cursos"></tbody>
+                </table>
+            </div>
+        </div>
+        <!-- LISTADO INTERESADOS POR CURSO -->
+        <div class="row justify-content-center p-5">
+            <div class="col-sm-10">
+                <h5>Interesados del curso: "Construccion en seco"</h5>
+                <table class="table text-center">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>Teléfono</th>
+                            <th>Email</th>
+                            <th>Dirección</th>
+                            <th>Número</th>
+                            <th>Localidad</th>
+                            <th>DNI</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody_interesados_curso"></tbody>
+                </table>
+            </div>
+        </div>
     </div>
     <script src="../assets/code.js"></script>
+    <script src="../assets/code_cursos.js"></script>
     <!-- Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 </body>
