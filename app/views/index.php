@@ -63,6 +63,7 @@
                             <th>Número</th>
                             <th>Localidad</th>
                             <th>DNI</th>
+                            <th>Fecha Registro</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>

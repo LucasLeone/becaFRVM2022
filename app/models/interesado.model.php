@@ -49,7 +49,7 @@ class Interesado extends Connection
     public static function actualizarDato($data)
     {
         try {
-            $sql = "UPDATE interesado SET nombre = :nombre, apellido = :apellido, telefono = :telefono, email = :email, direccion = :direccion, numero = :numero, dni = :dni, localidad = :localidad WHERE id = :id";
+            $sql = "UPDATE interesado SET nombre = :nombre, apellido = :apellido, telefono = :telefono, email = :email, direccion = :direccion, numero = :numero, dni = :dni, localidad = :localidad WHERE id_interesado = :id";
             $stmt = Connection::getConnection()->prepare($sql);
             $stmt->bindParam(':nombre', $data['nombre']);
             $stmt->bindParam(':apellido', $data['apellido']);
@@ -59,7 +59,7 @@ class Interesado extends Connection
             $stmt->bindParam(':numero', $data['numero']);
             $stmt->bindParam(':dni', $data['dni']);
             $stmt->bindParam(':localidad', $data['localidad']);
-            $stmt->bindParam(':id_interesado', $data['id_interesado']);
+            $stmt->bindParam(':id', $data['id_interesado']);
             $stmt->execute();
             return true;
         } catch (PDOException $th) {

@@ -9,7 +9,7 @@ $arrayName = array(
     'numero' => $_POST['numero'],
     'localidad' => $_POST['localidad'],
     'dni' => $_POST['dni'],
-    'id_interesado' => $_POST['id']
+    'id_interesado' => $_POST['id_interesado']
 );
 
 echo json_encode(Interesado::actualizarDato($arrayName));

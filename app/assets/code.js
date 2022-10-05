@@ -18,6 +18,7 @@ const app = new function() {
                         <td>${item.numero}</td>
                         <td>${item.localidad}</td>
                         <td>${item.dni}</td>
+                        <td>${item.fecharegistro}</td>
                         <td>
                             <a href="javascript:;" class="btn btn-warning btn-sm" onclick="app.editar(${item.id_interesado})">Editar</a>
                             <a href="javascript:;" class="btn btn-danger btn-sm" onclick="app.eliminar(${item.id_interesado})">Eliminar</a>
@@ -74,7 +75,7 @@ const app = new function() {
         })
             .then((res) => res.json())
             .then((data) => {
-                document.getElementById("id_interesado") = data.id_interesado;
+                document.getElementById("id_interesado").value = data.id_interesado;
                 document.getElementById("nombre").value = data.nombre;
                 document.getElementById("apellido").value = data.apellido;
                 document.getElementById("telefono").value = data.telefono;
