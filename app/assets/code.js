@@ -39,7 +39,7 @@ const app = new function() {
         form.append("localidad", document.getElementById("localidad").value);
         form.append("dni", document.getElementById("dni").value);
         form.append("id_interesado", document.getElementById("id_interesado").value);
-        if (form.get("id_interesado") == "") {
+        if (form.get("id_interesado") === "") {
             fetch("../controllers/guardar.php", {
                 method: "POST",
                 body: form,
