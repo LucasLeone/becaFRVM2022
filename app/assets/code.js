@@ -39,7 +39,7 @@ const app = new function() {
         form.append("localidad", document.getElementById("localidad").value);
         form.append("dni", document.getElementById("dni").value);
         form.append("id_interesado", document.getElementById("id_interesado").value);
-        if (form.get("id_interesado") === "") {
+        if (form.get("id_interesado") == "") {
             fetch("../controllers/guardar.php", {
                 method: "POST",
                 body: form,
@@ -65,15 +65,16 @@ const app = new function() {
                 .catch((error) => console.log(error));
         }
     };
-    this.editar = (id_interesado) => {
+    this.editar = (id) => {
         var form = new FormData();
-        form.append("id_interesado", id_interesado);
+        form.append("id", id);
         fetch("../controllers/editar.php", {
             method: "POST",
             body: form,
         })
             .then((res) => res.json())
             .then((data) => {
+                document.getElementById("id_interesado") = data.id_interesado;
                 document.getElementById("nombre").value = data.nombre;
                 document.getElementById("apellido").value = data.apellido;
                 document.getElementById("telefono").value = data.telefono;

@@ -17,7 +17,7 @@ class Interesado extends Connection
     public static function obtenerDatoId($id)
     {
         try {
-            $sql = "SELECT * FROM interesado WHERE id = :id";
+            $sql = "SELECT * FROM interesado WHERE id_interesado = :id";
             $stmt = Connection::getConnection()->prepare($sql);
             $stmt->bindParam(':id', $id);
             $stmt->execute();
