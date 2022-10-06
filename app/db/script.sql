@@ -10,12 +10,7 @@ CREATE TABLE IF NOT EXISTS public.interesado
     dni character varying COLLATE pg_catalog."default",
     localidad character varying COLLATE pg_catalog."default",
     fecharegistro date DEFAULT now(),
-    curso_fk integer,
-    CONSTRAINT interesado_pkey PRIMARY KEY (id_interesado),
-    CONSTRAINT curso_fk FOREIGN KEY (curso_fk)
-        REFERENCES public.curso (id_curso) MATCH SIMPLE
-        ON UPDATE CASCADE
-        ON DELETE CASCADE
+    CONSTRAINT interesado_pkey PRIMARY KEY (id_interesado)
 )
 WITH (
     OIDS = FALSE
@@ -24,6 +19,7 @@ TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS public.interesado
     OWNER to postgres;
+
 
 CREATE TABLE IF NOT EXISTS public.curso
 (
@@ -37,4 +33,30 @@ WITH (
 TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS public.curso
+    OWNER to postgres;
+
+
+CREATE TABLE IF NOT EXISTS public.interesados_curso
+(
+    id integer NOT NULL DEFAULT nextval('interesados_curso_id_seq'::regclass),
+    id_interesado integer NOT NULL,
+    id_curso integer NOT NULL,
+    CONSTRAINT interesados_curso_pkey PRIMARY KEY (id_interesado),
+    CONSTRAINT curso FOREIGN KEY (id_curso)
+        REFERENCES public.curso (id_curso) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+        NOT VALID,
+    CONSTRAINT interesado FOREIGN KEY (id_interesado)
+        REFERENCES public.interesado (id_interesado) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+        NOT VALID
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.interesados_curso
     OWNER to postgres;
