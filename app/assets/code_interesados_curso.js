@@ -9,7 +9,16 @@ const app_interesado_curso = new function() {
                 data.forEach((item) => {
                     this.tbody.innerHTML += `
                     <tr>
-                        <td>
+                        <td>${item.id_interesado}</td>
+                        <td>${item.nombre}</td>
+                        <td>${item.apellido}</td>
+                        <td>${item.telefono}</td>
+                        <td>${item.email}</td>
+                        <td>${item.direccion + " " + item.numero}</td>
+                        <td>${item.numero}</td>
+                        <td>${item.localidad}</td>
+                        <td>${item.dni}</td>
+                    </tr>
                     `
                 })
             })

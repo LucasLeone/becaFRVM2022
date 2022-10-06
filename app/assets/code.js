@@ -14,8 +14,7 @@ const app = new function() {
                         <td>${item.apellido}</td>
                         <td>${item.telefono}</td>
                         <td>${item.email}</td>
-                        <td>${item.direccion}</td>
-                        <td>${item.numero}</td>
+                        <td>${item.direccion + " " + item.numero}</td>
                         <td>${item.localidad}</td>
                         <td>${item.dni}</td>
                         <td>${item.fecharegistro}</td>

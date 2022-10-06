@@ -83,7 +83,6 @@
                             <th>Teléfono</th>
                             <th>Email</th>
                             <th>Dirección</th>
-                            <th>Número</th>
                             <th>Localidad</th>
                             <th>DNI</th>
                             <th>Fecha Registro</th>
@@ -129,25 +128,9 @@
             </div>
         </div>
         <!-- LISTADO INTERESADOS POR CURSO -->
-        <div class="row justify-content-center p-5">
+        <div id="interesados_por_curso" class="row justify-content-center p-5">
             <div class="col-sm-10">
-                <h5>Interesados del curso: "Construccion en seco"</h5>
-                <table class="table text-center">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Nombre</th>
-                            <th>Apellido</th>
-                            <th>Teléfono</th>
-                            <th>Email</th>
-                            <th>Dirección</th>
-                            <th>Número</th>
-                            <th>Localidad</th>
-                            <th>DNI</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tbody_interesados_curso"></tbody>
-                </table>
+                <h5>Interesados por curso</h5>
             </div>
         </div>
     </div>
