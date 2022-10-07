@@ -36,7 +36,7 @@ const app = new function() {
             .then((data) => {
                 data.forEach((item) => {
                     this.cursos_interes.innerHTML += `
-                    <option value="${item.id_curso}" class="curso_interes">${item.nombre}</option>
+                    <option id="curso_interes" value="${item.id_curso}" class="curso_interes">${item.nombre}</option>
                     `;
                 });
             })
@@ -62,10 +62,11 @@ const app = new function() {
             })
                 .then((res) => res.json())
                 .then((data) => {
+                    console.log(data);
                     alert("Creado con exito");
                     values.forEach((item) => {
                         var form_interes = new FormData();
-                        form_interes.append("id_interesado", 2);
+                        form_interes.append("id_interesado", data['id_interesado']);
                         form_interes.append("id_curso", item);
                         fetch("../controllers/registrar_interes.php", {
                             method: "POST",
@@ -79,7 +80,7 @@ const app = new function() {
                             .catch((error) => console.log(error));
                     })
                     this.listado();
-                    // app_cursos.listar_interesados_curso();
+                    app_cursos.listado();
                     this.limpiar();
                 })
                 .catch((error) => console.log(error));
@@ -92,6 +93,7 @@ const app = new function() {
                 .then((data) => {
                     alert("Actualizado con exito");
                     this.listado();
+                    app_cursos.listado();
                     this.limpiar();
                 })
                 .catch((error) => console.log(error));
@@ -115,6 +117,25 @@ const app = new function() {
                 document.getElementById("numero").value = data.numero;
                 document.getElementById("localidad").value = data.localidad;
                 document.getElementById("dni").value = data.dni;
+                var form_cursos = new FormData();
+                form_cursos.append("id_interesado", data.id_interesado);
+                fetch("../controllers/editar_cursos_interes.php", {
+                    method: "POST",
+                    body: form_cursos,
+                })
+                    .then((res) => res.json())
+                    .then((data) => {
+                        var ids_cursos = Array();
+                        data.forEach((item) => {
+                            ids_cursos.push(item.id_curso);
+                        })
+                        ids_cursos.forEach((item) => {
+                            if (document.getElementById("curso_interes").value in ids_cursos) {
+                                document.getElementById("curso_interes").setAttribute("selected", true);
+                            }
+                        })
+                    })
+                    .catch((error) => console.log(error));
             })
             .catch((error) => console.log(error));
     };
@@ -129,6 +150,7 @@ const app = new function() {
             .then((data) => {
                 alert("Eliminado con exito");
                 this.listado();
+                app_cursos.listado();
             })
             .catch((error) => console.log(error));
     };

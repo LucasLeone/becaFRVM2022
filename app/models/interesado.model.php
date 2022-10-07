@@ -30,7 +30,7 @@ class Interesado extends Connection
     public static function guardarDato($data)
     {
         try {
-            $sql = "INSERT INTO interesado(nombre, apellido, telefono, email, direccion, numero, dni, localidad) VALUES (:nombre, :apellido, :telefono, :email, :direccion, :numero, :dni, :localidad)";
+            $sql = "INSERT INTO interesado(nombre, apellido, telefono, email, direccion, numero, dni, localidad) VALUES (:nombre, :apellido, :telefono, :email, :direccion, :numero, :dni, :localidad) RETURNING id_interesado";
             $stmt = Connection::getConnection()->prepare($sql);
             $stmt->bindParam(':nombre', $data['nombre']);
             $stmt->bindParam(':apellido', $data['apellido']);
@@ -41,7 +41,8 @@ class Interesado extends Connection
             $stmt->bindParam(':dni', $data['dni']);
             $stmt->bindParam(':localidad', $data['localidad']);
             $stmt->execute();
-            return true;
+            $result = $stmt->fetch();
+            return $result;
         } catch (PDOException $th) {
             echo $th->getMessage();
         }
