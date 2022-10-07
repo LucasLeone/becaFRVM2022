@@ -37,6 +37,7 @@ const app_cursos = new function() {
                     alert("Creado con exito");
                     this.listado();
                     this.limpiar();
+                    app.listar_cursos();
                 })
                 .catch((error) => console.log(error));
         } else {
@@ -49,6 +50,7 @@ const app_cursos = new function() {
                     alert("Actualizado con exito");
                     this.listado();
                     this.limpiar();
+                    app.listar_cursos();
                 })
                 .catch((error) => console.log(error));
         }
@@ -78,6 +80,7 @@ const app_cursos = new function() {
             .then((data) => {
                 alert("Eliminado con exito");
                 this.listado();
+                app.listar_cursos();
             })
             .catch((error) => console.log(error));
     }
@@ -86,6 +89,7 @@ const app_cursos = new function() {
         document.getElementById("id_curso").value = "";
     };
     this.listar_interesados_curso = (curso) => {
+        this.interesados_por_curso.innerHTML = "";
         var form = new FormData();
         form.append("id_curso", curso.id_curso);
         fetch("../controllers/listado_interesados_curso.php", {
@@ -94,9 +98,8 @@ const app_cursos = new function() {
         })
             .then((res) => res.json())
             .then((data) => {
-                console.log(data);
                 this.interesados_por_curso.innerHTML += `
-                    <div class="row justify-content-center p-5 col-sm-10">
+                    <div class="row justify-content-center mt-4">
                         <div>
                             <h5>Curso: "${curso.nombre}"</h5>
                             <table class="table text-center">
@@ -112,27 +115,38 @@ const app_cursos = new function() {
                                         <th>DNI</th>
                                     </tr>
                                 </thead>
-                                <tbody id="interesados_por_curso_datos"></tbody>
+                                <tbody id="interesados_por_curso_datos${curso.id_curso}"></tbody>
                             </table>
                         </div>
                     </div>
                 `;
-                this.interesados_por_curso_datos = document.getElementById("interesados_por_curso_datos");
                 data.forEach((item) => {
-                    this.interesados_por_curso_datos.innerHTML += `
-                                    <tr>
-                                        <td>${item.id_interesado}</td>
-                                        <td>${item.nombre}</td>
-                                        <td>${item.apellido}</td>
-                                        <td>${item.telefono}</td>
-                                        <td>${item.email}</td>
-                                        <td>${item.direccion + " " + item.numero}</td>
-                                        <td>${item.localidad}</td>
-                                        <td>${item.dni}</td>
-                                    </tr>
-                `;
-                });
+                    var form_interesados = new FormData();
+                    form_interesados.append("id_interesado", item['id_interesado']);
+                    fetch("../controllers/obtener_datos_interesados.php", {
+                        method: "POST",
+                        body: form_interesados
+                    })
+                        .then((res) => res.json())
+                        .then((data) => {
+                            this.interesados_por_curso_datos = document.getElementById("interesados_por_curso_datos"+curso.id_curso);
+                            // this.interesados_por_curso_datos.innerHTML = "";
+                            this.interesados_por_curso_datos.innerHTML += `
+                                <tr>
+                                    <td>${data["id_interesado"]}</td>
+                                    <td>${data["nombre"]}</td>
+                                    <td>${data["apellido"]}</td>
+                                    <td>${data["telefono"]}</td>
+                                    <td>${data["email"]}</td>
+                                    <td>${data["direccion"] + " " + data["numero"]}</td>
+                                    <td>${data["localidad"]}</td>
+                                    <td>${data["dni"]}</td>
+                                </tr>
+                            `;
+                        });
+                })
             })
+        }
     }
-}();
+();
 app_cursos.listado();

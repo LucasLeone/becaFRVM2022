@@ -14,12 +14,12 @@ class Interesado extends Connection
             echo $th->getMessage();
         }
     }
-    public static function obtenerDatoId($id)
+    public static function obtenerDatoId($id_interesado)
     {
         try {
             $sql = "SELECT * FROM interesado WHERE id_interesado = :id";
             $stmt = Connection::getConnection()->prepare($sql);
-            $stmt->bindParam(':id', $id);
+            $stmt->bindParam(':id', $id_interesado);
             $stmt->execute();
             $result = $stmt->fetch();
             return $result;
@@ -62,6 +62,26 @@ class Interesado extends Connection
             $stmt->bindParam(':id', $data['id_interesado']);
             $stmt->execute();
             return true;
+        } catch (PDOException $th) {
+            echo $th->getMessage();
+        }
+    }
+    public static function buscarInteresado($data)
+    {
+        try {
+            if ($data['nombre'] != '' and $data['apellido'] != ''){
+                $sql = "SELECT * FROM public.interesado WHERE nombre = :nombre AND apellido = :apellido";
+            } elseif ($data['nombre'] != '' and $data['apellido'] == '') {
+                $sql = "SELECT * FROM public.interesado WHERE nombre = :nombre";
+            } elseif ($data['nombre'] == '' and $data['apellido'] != '') {
+                $sql = "SELECT * FROM public.interesado WHERE apellido = :apellido";
+            }
+            $stmt = Connection::getConnection()->prepare($sql);
+            $stmt->bindParam(':nombre', $data['nombre']);
+            $stmt->bindParam(':apellido', $data['apellido']);
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
         } catch (PDOException $th) {
             echo $th->getMessage();
         }

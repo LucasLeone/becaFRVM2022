@@ -1,5 +1,6 @@
 const app = new function() {
     this.tbody = document.getElementById("tbody");
+    this.cursos_interes = document.getElementById("cursos_interes");
 
     this.listado = () => {
         fetch("../controllers/listado.php")
@@ -28,6 +29,19 @@ const app = new function() {
             })
             .catch((error) => console.log(error));
     };
+    this.listar_cursos = () => {
+        this.cursos_interes.innerHTML = "";
+        fetch("../controllers/listado_curso.php")
+            .then((res) => res.json())
+            .then((data) => {
+                data.forEach((item) => {
+                    this.cursos_interes.innerHTML += `
+                    <option value="${item.id_curso}" class="curso_interes">${item.nombre}</option>
+                    `;
+                });
+            })
+            .catch((error) => console.log(error));
+    };
     this.guardar = () => {
         var form = new FormData();
         form.append("nombre", document.getElementById("nombre").value);
@@ -39,6 +53,8 @@ const app = new function() {
         form.append("localidad", document.getElementById("localidad").value);
         form.append("dni", document.getElementById("dni").value);
         form.append("id_interesado", document.getElementById("id_interesado").value);
+        var options = document.getElementById("cursos_interes").selectedOptions;
+        var values = Array.from(options).map(({ value }) => value);
         if (form.get("id_interesado") === "") {
             fetch("../controllers/guardar.php", {
                 method: "POST",
@@ -47,7 +63,23 @@ const app = new function() {
                 .then((res) => res.json())
                 .then((data) => {
                     alert("Creado con exito");
+                    values.forEach((item) => {
+                        var form_interes = new FormData();
+                        form_interes.append("id_interesado", 2);
+                        form_interes.append("id_curso", item);
+                        fetch("../controllers/registrar_interes.php", {
+                            method: "POST",
+                            body: form_interes,
+                        })
+                            .then((res) => res.json())
+                            .then((data) => {
+                                console.log(data)
+                                alert("Registrado el interes con exito");
+                            })
+                            .catch((error) => console.log(error));
+                    })
                     this.listado();
+                    // app_cursos.listar_interesados_curso();
                     this.limpiar();
                 })
                 .catch((error) => console.log(error));
@@ -99,6 +131,41 @@ const app = new function() {
                 this.listado();
             })
             .catch((error) => console.log(error));
+    };
+    this.buscar = () => {
+        if (document.getElementById("nombre_search").value != "" || document.getElementById("apellido_search").value != "") {
+            var form = new FormData();
+            form.append("nombre", document.getElementById("nombre_search").value);
+            form.append("apellido", document.getElementById("apellido_search").value);
+            fetch("../controllers/buscar_interesado.php", {
+                method: "POST",
+                body: form,
+            })
+                .then((res) => res.json())
+                .then((data) => {
+                    this.tbody.innerHTML = "";
+                    data.forEach((item) => {
+                        this.tbody.innerHTML += `
+                            <tr>
+                                <td>${item.id_interesado}</td>
+                                <td>${item.nombre}</td>
+                                <td>${item.apellido}</td>
+                                <td>${item.telefono}</td>
+                                <td>${item.email}</td>
+                                <td>${item.direccion + " " + item.numero}</td>
+                                <td>${item.localidad}</td>
+                                <td>${item.dni}</td>
+                                <td>${item.fecharegistro}</td>
+                                <td>
+                                    <a href="javascript:;" class="btn btn-warning btn-sm" onclick="app.editar(${item.id_interesado})">Editar</a>
+                                    <a href="javascript:;" class="btn btn-danger btn-sm" onclick="app.eliminar(${item.id_interesado})">Eliminar</a>
+                                </td>
+                            </tr>
+                        `;
+                })})
+        } else {
+            this.listado();
+        }
     }
     this.limpiar = () => {
         document.getElementById("nombre").value = "";
@@ -113,3 +180,4 @@ const app = new function() {
       };
 }();
 app.listado();
+app.listar_cursos();

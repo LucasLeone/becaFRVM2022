@@ -61,8 +61,7 @@
                         </div>
                         <div class="form-group d-grid">
                             <label for="cursos_interes">Cursos interes</label>
-                            <select name="cursos_interes" id="cursos_interes" multiple>
-                                <option value="hola">hola</option>
+                            <select class="form-select" name="cursos_interes" id="cursos_interes" multiple>
                             </select>
                         </div>
                     </div>
@@ -73,6 +72,19 @@
                 </form>
                 <br />
                 <h5>Listado Interesado</h5>
+                <hr />
+                <div class="interesados_search">
+                    <form action="javascript:void(0);" onsubmit="app.buscar()" class="d-flex">
+                        <div class="form-group me-2">
+                            <input type="text" class="form-control" id="nombre_search" placeholder="Nombre" autofocus />
+                        </div>
+                        <div class="form-group me-2">
+                            <input type="text" class="form-control" id="apellido_search" placeholder="Apellido" autofocus />
+                        </div>
+                        <button class="btn btn-outline-success me-2" type="submit">Buscar</button>
+                        <button class="btn btn-outline-warning" type="submit">Limpiar</button>
+                    </form>
+                </div>
                 <hr />
                 <table class="table text-center">
                     <thead>
@@ -128,9 +140,12 @@
             </div>
         </div>
         <!-- LISTADO INTERESADOS POR CURSO -->
-        <div id="interesados_por_curso" class="row justify-content-center p-5">
+        <div class="row justify-content-center p-5">
             <div class="col-sm-10">
                 <h5>Interesados por curso</h5>
+            </div>
+            <div id="interesados_por_curso" class="col-sm-10">
+                
             </div>
         </div>
     </div>
