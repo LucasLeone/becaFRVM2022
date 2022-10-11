@@ -165,7 +165,7 @@ const app_cursos = new function() {
                         </div>
                     </div>
                 `;
-                document.getElementById("id_curso_buscar_interesado").value = curso.id_curso;
+                document.getElementById('id_curso_buscar_interesado').value = curso.id_curso;
                 data.forEach((item) => {
                     var form_interesados = new FormData();
                     form_interesados.append("id_interesado", item['id_interesado']);
@@ -194,36 +194,36 @@ const app_cursos = new function() {
     }
     this.buscar_interesados_curso = () => {
         var form = new FormData();
-        form.append('id_curso', document.getElementById("id_curso_buscar_interesado").value);
+        form.append('id_curso', document.getElementById('id_curso_buscar_interesado').value);
         form.append("nombre", document.getElementById("nombre_interesado_curso_search").value);
         form.append("apellido", document.getElementById("apellido_interesado_curso_search").value);
-        console.log(form.get('id_curso'));
-        fetch("../controllers/buscar_interesados_curso.php", {
-            method: "POST",
-            body: form,
-        })
-            .then((res) => res.json())
-            .then((data) => {
-                this.buscar_interesados_por_curso = document.getElementById("buscar_interesados_por_curso"+curso.id_curso);
-                this.buscar_interesados_por_curso.innerHTML = "";
-                data.forEach((item) => {
-                    console.log(item)
-                    this.buscar_interesados_por_curso.innerHTML += `
-                            <tr>
-                                <td>${item.id_interesado}</td>
-                                <td>${item.nombre}</td>
-                                <td>${item.apellido}</td>
-                                <td>${item.telefono}</td>
-                                <td>${item.email}</td>
-                                <td>${item.direccion + " " + item.numero}</td>
-                                <td>${item.localidad}</td>
-                                <td>${item.dni}</td>
-                                <td>${item.fecharegistro}</td>
-                            </tr>
-                        `;
-                })
+        if (form.get('nombre') != '' || form.get('apellido')) {
+            fetch("../controllers/buscar_interesados_curso.php", {
+                method: "POST",
+                body: form,
             })
-            .catch((error) => console.log(error));
+                .then((res) => res.json())
+                .then((data) => {
+                    this.buscar_interesados_por_curso = document.getElementById("buscar_interesados_por_curso"+curso.id_curso);
+                    this.buscar_interesados_por_curso.innerHTML = "";
+                    data.forEach((item) => {
+                        this.buscar_interesados_por_curso.innerHTML += `
+                                <tr>
+                                    <td>${item.id_interesado}</td>
+                                    <td>${item.nombre}</td>
+                                    <td>${item.apellido}</td>
+                                    <td>${item.telefono}</td>
+                                    <td>${item.email}</td>
+                                    <td>${item.direccion + " " + item.numero}</td>
+                                    <td>${item.localidad}</td>
+                                    <td>${item.dni}</td>
+                                    <td>${item.fecharegistro}</td>
+                                </tr>
+                            `;
+                    })
+                })
+                .catch((error) => console.log(error));
+        }
     };
 }
 app_cursos.listado();
