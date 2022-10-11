@@ -68,23 +68,23 @@ class Interesado extends Connection
         }
     }
     public static function buscarInteresado($data)
-    {
-        try {
-            if ($data['nombre'] != '' and $data['apellido'] != ''){
-                $sql = "SELECT * FROM public.interesado WHERE nombre = :nombre AND apellido = :apellido";
-            } elseif ($data['nombre'] != '' and $data['apellido'] == '') {
-                $sql = "SELECT * FROM public.interesado WHERE nombre = :nombre";
-            } elseif ($data['nombre'] == '' and $data['apellido'] != '') {
-                $sql = "SELECT * FROM public.interesado WHERE apellido = :apellido";
+    {   
+        $sql = "SELECT * FROM public.interesado WHERE 1=1";
+        $params = [];
+        
+        foreach(['nombre','apellido'] as $campo) {
+            if(!empty($data[$campo])) {
+                $sql .= sprintf(' AND %s = :%s ',$campo, $campo);
+                $params[$campo] = $data[$campo];
             }
+        }
+        try {
             $stmt = Connection::getConnection()->prepare($sql);
-            $stmt->bindParam(':nombre', $data['nombre']);
-            $stmt->bindParam(':apellido', $data['apellido']);
-            $stmt->execute();
+            $stmt->execute($params);
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
             return $result;
         } catch (PDOException $th) {
-            echo $th->getMessage();
+            return ['error'=> $th->getMessage()];  
         }
     }
     public static function eliminarDato($id_interesado)

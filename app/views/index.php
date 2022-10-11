@@ -82,7 +82,7 @@
                             <input type="text" class="form-control" id="apellido_search" placeholder="Apellido" autofocus />
                         </div>
                         <button class="btn btn-outline-success me-2" type="submit">Buscar</button>
-                        <button class="btn btn-outline-warning" type="submit">Limpiar</button>
+                        <button class="btn btn-outline-warning" type="reset">Limpiar</button>
                     </form>
                 </div>
                 <hr />

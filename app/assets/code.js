@@ -100,6 +100,7 @@ const app = new function() {
         }
     };
     this.editar = (id) => {
+        this.limpiar();
         var form = new FormData();
         form.append("id", id);
         fetch("../controllers/editar.php", {
@@ -125,14 +126,10 @@ const app = new function() {
                 })
                     .then((res) => res.json())
                     .then((data) => {
-                        var ids_cursos = Array();
+                        let element = document.getElementById("cursos_interes");
                         data.forEach((item) => {
-                            ids_cursos.push(item.id_curso);
-                        })
-                        ids_cursos.forEach((item) => {
-                            if (document.getElementById("curso_interes").value in ids_cursos) {
-                                document.getElementById("curso_interes").setAttribute("selected", true);
-                            }
+                            element.querySelector("option[value='"+ item.id_curso + "']").selected = true;
+                            // element.value = item.id_curso;
                         })
                     })
                     .catch((error) => console.log(error));
@@ -155,19 +152,19 @@ const app = new function() {
             .catch((error) => console.log(error));
     };
     this.buscar = () => {
-        if (document.getElementById("nombre_search").value != "" || document.getElementById("apellido_search").value != "") {
-            var form = new FormData();
-            form.append("nombre", document.getElementById("nombre_search").value);
-            form.append("apellido", document.getElementById("apellido_search").value);
-            fetch("../controllers/buscar_interesado.php", {
-                method: "POST",
-                body: form,
-            })
-                .then((res) => res.json())
-                .then((data) => {
-                    this.tbody.innerHTML = "";
-                    data.forEach((item) => {
-                        this.tbody.innerHTML += `
+        var form = new FormData();
+        form.append("nombre", document.getElementById("nombre_search").value);
+        form.append("apellido", document.getElementById("apellido_search").value);
+        fetch("../controllers/buscar_interesado.php", {
+            method: "POST",
+            body: form,
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data);
+                this.tbody.innerHTML = "";
+                data.forEach((item) => {
+                    this.tbody.innerHTML += `
                             <tr>
                                 <td>${item.id_interesado}</td>
                                 <td>${item.nombre}</td>
@@ -184,10 +181,9 @@ const app = new function() {
                                 </td>
                             </tr>
                         `;
-                })})
-        } else {
-            this.listado();
-        }
+                })
+            })
+            .catch((error) => console.log(error));
     }
     this.limpiar = () => {
         document.getElementById("nombre").value = "";
@@ -199,6 +195,8 @@ const app = new function() {
         document.getElementById("localidad").value = "";
         document.getElementById("dni").value = "";
         document.getElementById("id_interesado").value = "";
+        let element = document.getElementById("cursos_interes");
+        element.querySelector("option").selected = false;
       };
 }();
 app.listado();
