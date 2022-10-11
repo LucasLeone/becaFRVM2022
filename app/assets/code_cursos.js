@@ -69,6 +69,40 @@ const app_cursos = new function() {
             })
             .catch((error) => console.log(error));
     };
+    this.buscar = () => {
+        var nombre_curso = document.getElementById("nombrecurso_search").value;
+        if (nombre_curso != '') {
+            var form = new FormData();
+            form.append("nombre", nombre_curso);
+            fetch("../controllers/buscar_curso.php", {
+                method: "POST",
+                body: form,
+            })
+                .then((res) => res.json())
+                .then((data) => {
+                    console.log(data);
+                    // this.tbody.innerHTML = "";
+                    /*
+                    data.forEach((item) => {
+                        console.log(item);
+                        this.tbody.innerHTML += `
+                            <tr>
+                                <td>${item.id_curso}</td>
+                                <td>${item.nombre}</td>
+                                <td>
+                                    <a href="javascript:;" class="btn btn-warning btn-sm" onclick="app_cursos.editar(${item.id_curso})">Editar</a>
+                                    <a href="javascript:;" class="btn btn-danger btn-sm" onclick="app_cursos.eliminar(${item.id_curso})">Eliminar</a>
+                                </td>
+                            </tr>
+                        `;
+                    })
+                    */
+                })
+                .catch((error) => console.log(error));
+        } else {
+            this.listado();
+        }
+    }
     this.eliminar = (id) => {
         var form = new FormData();
         form.append("id", id);

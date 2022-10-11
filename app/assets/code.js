@@ -161,7 +161,6 @@ const app = new function() {
         })
             .then((res) => res.json())
             .then((data) => {
-                console.log(data);
                 this.tbody.innerHTML = "";
                 data.forEach((item) => {
                     this.tbody.innerHTML += `

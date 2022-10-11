@@ -127,6 +127,16 @@
                 <br />
                 <h5>Listado Cursos</h5>
                 <hr />
+                <div class="cursos_search">
+                    <form action="javascript:void(0);" onsubmit="app_cursos.buscar()" class="d-flex">
+                        <div class="form-group me-2">
+                            <input type="text" class="form-control" id="nombrecurso_search" placeholder="Nombre" autofocus />
+                        </div>
+                        <button class="btn btn-outline-success me-2" type="submit">Buscar</button>
+                        <button class="btn btn-outline-warning" type="reset">Limpiar</button>
+                    </form>
+                </div>
+                <hr>
                 <table class="table text-center">
                     <thead>
                         <tr>

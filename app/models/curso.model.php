@@ -14,6 +14,19 @@ class Curso extends Connection
             echo $th->getMessage();
         }
     }
+    public static function buscarCurso($nombre)
+    {   
+        try {
+            $sql = "SELECT * FROM curso WHERE nombre = :nombre";
+            $stmt = Connection::getConnection()->prepare($sql);
+            $stmt->bindParam(':nombre', $nombre);
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result;
+        } catch (PDOException $th) {
+            echo $th->getMessage();
+        }
+    }
     public static function obtenerDatoId($id)
     {
         try {
