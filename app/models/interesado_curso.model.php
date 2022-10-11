@@ -29,7 +29,27 @@ class InteresadoCurso extends Connection
             echo $th->getMessage();
         }
     }
-
+    public static function buscarInteresadoCurso($data)
+    {   
+        $sql = "SELECT * FROM public.interesados_curso WHERE id_curso = :id";
+        $stmt->bindParam(':id', $data['id_curso']);
+        $params = [];
+        
+        foreach(['nombre','apellido'] as $campo) {
+            if(!empty($data[$campo])) {
+                $sql .= sprintf(' AND %s ~* :%s ',$campo, $campo);
+                $params[$campo] = $data[$campo];
+            }
+        }
+        try {
+            $stmt = Connection::getConnection()->prepare($sql);
+            $stmt->execute($params);
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+        } catch (PDOException $th) {
+            return ['error'=> $th->getMessage()];  
+        }
+    }
     public static function obtenerCursosInteres($id_interesado)
     {
         try {
