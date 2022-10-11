@@ -74,7 +74,7 @@ class Interesado extends Connection
         
         foreach(['nombre','apellido'] as $campo) {
             if(!empty($data[$campo])) {
-                $sql .= sprintf(' AND %s = :%s ',$campo, $campo);
+                $sql .= sprintf(' AND %s ~* :%s ',$campo, $campo);
                 $params[$campo] = $data[$campo];
             }
         }

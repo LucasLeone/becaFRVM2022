@@ -80,11 +80,8 @@ const app_cursos = new function() {
             })
                 .then((res) => res.json())
                 .then((data) => {
-                    console.log(data);
-                    // this.tbody.innerHTML = "";
-                    /*
+                    this.tbody.innerHTML = "";
                     data.forEach((item) => {
-                        console.log(item);
                         this.tbody.innerHTML += `
                             <tr>
                                 <td>${item.id_curso}</td>
@@ -96,7 +93,6 @@ const app_cursos = new function() {
                             </tr>
                         `;
                     })
-                    */
                 })
                 .catch((error) => console.log(error));
         } else {

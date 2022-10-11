@@ -1,3 +1,6 @@
 <?php
 require_once "../models/curso.model.php";
-echo json_encode(Curso::buscarCurso($_POST['nombre']));
+$arrayName = [
+    'nombre' => strval($_POST['nombre'] ?? ''),
+];
+echo json_encode(Curso::buscarCurso($arrayName));
