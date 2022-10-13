@@ -72,7 +72,7 @@ class Interesado extends Connection
         $sql = "SELECT * FROM public.interesado WHERE 1=1";
         $params = [];
         
-        foreach(['nombre','apellido'] as $campo) {
+        foreach(['nombre','apellido', 'localidad'] as $campo) {
             if(!empty($data[$campo])) {
                 $sql .= sprintf(' AND %s ~* :%s ',$campo, $campo);
                 $params[$campo] = $data[$campo];
@@ -85,6 +85,18 @@ class Interesado extends Connection
             return $result;
         } catch (PDOException $th) {
             return ['error'=> $th->getMessage()];  
+        }
+    }
+    public static function listarLocalidades()
+    {
+        try {
+            $sql = "SELECT localidad FROM public.interesado";
+            $stmt = Connection::getConnection()->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+        } catch (PDOException $th) {
+            echo $th->getMessage();
         }
     }
     public static function eliminarDato($id_interesado)

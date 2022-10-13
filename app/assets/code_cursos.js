@@ -1,6 +1,7 @@
 const app_cursos = new function() {
     this.tbody = document.getElementById("tbody_cursos");
     this.interesados_por_curso = document.getElementById("interesados_por_curso");
+    var cant_cursos = 0;
 
     this.listado = () => {
         fetch("../controllers/listado_curso.php")
@@ -8,6 +9,7 @@ const app_cursos = new function() {
             .then((data) => {
                 this.tbody.innerHTML = "";
                 data.forEach((item) => {
+                    cant_cursos += 1;
                     this.listar_interesados_curso(item)
                     this.tbody.innerHTML += `
                     <tr>
@@ -144,6 +146,11 @@ const app_cursos = new function() {
                                     </div>
                                     <button class="btn btn-outline-success me-2" type="submit">Buscar</button>
                                     <button class="btn btn-outline-warning" type="reset">Limpiar</button>
+                                    <select class="form-select ms-2 w-25" name="localidad_filtro" id="localidad_filtro">
+                                        <option value="">Seleccionar localidad</option>
+                                        <option value="">Cabral</option>
+                                        <option value="">Villa Maria</option>
+                                    </select>
                                 </form>
                             </div>
                             <hr>

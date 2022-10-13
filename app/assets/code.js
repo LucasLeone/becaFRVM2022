@@ -1,6 +1,7 @@
 const app = new function() {
     this.tbody = document.getElementById("tbody");
     this.cursos_interes = document.getElementById("cursos_interes");
+    this.localidad_filtro = document.getElementById("localidad_filtro");
 
     this.listado = () => {
         fetch("../controllers/listado.php")
@@ -42,6 +43,22 @@ const app = new function() {
             })
             .catch((error) => console.log(error));
     };
+    this.listar_localidades = () => {
+        this.localidad_filtro.innerHTML = "";
+        fetch("../controllers/listar_localidades.php")
+            .then((res) => res.json())
+            .then((data) => {
+                this.localidad_filtro.innerHTML += `
+                    <option value="" selected>Seleccionar localidad</option>
+                `
+                data.forEach((item) => {
+                    this.localidad_filtro.innerHTML += `
+                    <option id="curso_interes" value="${item.localidad}" class="curso_interes">${item.localidad}</option>
+                    `;
+                });
+            })
+            .catch((error) => console.log(error));
+    }
     this.guardar = () => {
         var form = new FormData();
         form.append("nombre", document.getElementById("nombre").value);
@@ -81,6 +98,7 @@ const app = new function() {
                     })
                     this.listado();
                     app_cursos.listado();
+                    this.listar_localidades();
                     this.limpiar();
                 })
                 .catch((error) => console.log(error));
@@ -94,6 +112,7 @@ const app = new function() {
                     alert("Actualizado con exito");
                     this.listado();
                     app_cursos.listado();
+                    this.listar_localidades();
                     this.limpiar();
                 })
                 .catch((error) => console.log(error));
@@ -148,6 +167,7 @@ const app = new function() {
                 alert("Eliminado con exito");
                 this.listado();
                 app_cursos.listado();
+                this.listar_localidades();
             })
             .catch((error) => console.log(error));
     };
@@ -155,6 +175,9 @@ const app = new function() {
         var form = new FormData();
         form.append("nombre", document.getElementById("nombre_search").value);
         form.append("apellido", document.getElementById("apellido_search").value);
+        var localidad_elegida = document.getElementById("localidad_filtro").selectedOptions;
+        var values = Array.from(localidad_elegida).map(({ value }) => value);
+        form.append("localidad", values);
         fetch("../controllers/buscar_interesado.php", {
             method: "POST",
             body: form,
@@ -200,3 +223,4 @@ const app = new function() {
 }();
 app.listado();
 app.listar_cursos();
+app.listar_localidades();

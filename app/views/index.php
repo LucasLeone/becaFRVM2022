@@ -85,9 +85,6 @@
                         <button class="btn btn-outline-warning" type="reset">Limpiar</button>
                         <label for="localidad_filtro" class="ms-5">Localidad</label>
                         <select class="form-select ms-2 w-25" name="localidad_filtro" id="localidad_filtro">
-                            <option value="">Seleccionar localidad</option>
-                            <option value="">Cabral</option>
-                            <option value="">Villa Maria</option>
                         </select>
                     </form>
                 </div>
