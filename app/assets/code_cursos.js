@@ -147,9 +147,7 @@ const app_cursos = new function() {
                                     <button class="btn btn-outline-success me-2" type="submit">Buscar</button>
                                     <button class="btn btn-outline-warning" type="reset">Limpiar</button>
                                     <select class="form-select ms-2 w-25" name="localidad_filtro" id="localidad_filtro">
-                                        <option value="">Seleccionar localidad</option>
-                                        <option value="">Cabral</option>
-                                        <option value="">Villa Maria</option>
+                                        <option>Seleccionar localidad</option>
                                     </select>
                                 </form>
                             </div>
@@ -198,7 +196,7 @@ const app_cursos = new function() {
                         });
                 })
             })
-    }
+    };
     this.buscar_interesados_curso = () => {
         var form = new FormData();
         form.append('id_curso', document.getElementById('id_curso_buscar_interesado').value);

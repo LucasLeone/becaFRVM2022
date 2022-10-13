@@ -1,7 +1,6 @@
 const app = new function() {
     this.tbody = document.getElementById("tbody");
     this.cursos_interes = document.getElementById("cursos_interes");
-    this.localidad_filtro = document.getElementById("localidad_filtro");
 
     this.listado = () => {
         fetch("../controllers/listado.php")
@@ -44,6 +43,7 @@ const app = new function() {
             .catch((error) => console.log(error));
     };
     this.listar_localidades = () => {
+        this.localidad_filtro = document.getElementById("localidad_filtro");
         this.localidad_filtro.innerHTML = "";
         fetch("../controllers/listar_localidades.php")
             .then((res) => res.json())
