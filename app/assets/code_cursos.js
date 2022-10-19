@@ -2,7 +2,7 @@ const app_cursos = new function() {
     this.tbody = document.getElementById("tbody_cursos");
     this.interesados_por_curso = document.getElementById("interesados_por_curso");
     var cant_cursos = 0;
-    // var localidades = app.localidades;
+    var localidades = app.localidades;
 
     this.listado = () => {
         fetch("../controllers/listado_curso.php")
@@ -184,20 +184,12 @@ const app_cursos = new function() {
                         </div>
                     </div>
                 `;
-                var localidad_filtro_interesados = document.getElementById("localidad_filtro_interesados"+curso.id_curso);
-                fetch("../controllers/listar_localidades.php")
-                .then((res) => res.json())
-                    .then((data) => {
-                        localidad_filtro_interesados.innerHTML += `
-                            <option value="" selected>Seleccionar localidad</option>
-                        `
-                        data.forEach((item) => {
-                            localidad_filtro_interesados.innerHTML += `
-                                <option id="curso_interes" value="${item.localidad}" class="curso_interes">${item.localidad}</option>
-                            `;
-                        });
-                    })
-                    .catch((error) => console.log(error));
+                var localidad_interesado = document.getElementById("localidad_filtro_interesados"+curso.id_curso);
+                localidades.forEach(localidad => {
+                    localidad_interesado.innerHTML += `
+                        <option value="${localidad}">${localidad}</option>
+                    `
+                });
                 data.forEach((item) => {
                     var form_interesados = new FormData();
                     form_interesados.append("id_interesado", item['id_interesado']);
@@ -257,7 +249,6 @@ const app_cursos = new function() {
                                     <td>${item.direccion + " " + item.numero}</td>
                                     <td>${item.localidad}</td>
                                     <td>${item.dni}</td>
-                                    <td>${item.fecharegistro}</td>
                                 </tr>
                             `;
                 })
