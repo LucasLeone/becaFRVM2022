@@ -2,6 +2,7 @@ const app_cursos = new function() {
     this.tbody = document.getElementById("tbody_cursos");
     this.interesados_por_curso = document.getElementById("interesados_por_curso");
     var cant_cursos = 0;
+    // var localidades = app.localidades;
 
     this.listado = () => {
         fetch("../controllers/listado_curso.php")
@@ -136,8 +137,8 @@ const app_cursos = new function() {
                             <h5>Curso: "${curso.nombre}"</h5>
                             <hr>
                             <div class="interesados_search">
-                                <form action="javascript:void(0);" onsubmit="app_cursos.buscar_interesados_curso()" class="d-flex">
-                                    <input type="hidden" id="id_curso_buscar_interesado" />
+                                <form action="javascript:void(0);" onsubmit="app_cursos.buscar_interesados_curso(event)" class="d-flex">
+                                    <input type="hidden" id="id_curso_buscar_interesado" value="${curso.id_curso}">
                                     <div class="form-group me-2">
                                         <input type="text" class="form-control" id="nombre_interesado_curso_search" placeholder="Nombre" autofocus />
                                     </div>
@@ -146,7 +147,7 @@ const app_cursos = new function() {
                                     </div>
                                     <button class="btn btn-outline-success me-2" type="submit">Buscar</button>
                                     <button class="btn btn-outline-warning" type="reset">Limpiar</button>
-                                    <select class="form-select ms-2 w-25" name="localidad_filtro" id="localidad_filtro">
+                                    <select class="form-select ms-2 w-25" name="localidad_filtro" id="localidad_filtro_interesados${curso.id_curso}">
                                         <option>Seleccionar localidad</option>
                                     </select>
                                 </form>
@@ -167,10 +168,36 @@ const app_cursos = new function() {
                                 </thead>
                                 <tbody id="interesados_por_curso_datos${curso.id_curso}"></tbody>
                             </table>
+                            <nav aria-label="Paginacion de interesados por cursos">
+                                <ul class="pagination justify-content-center">
+                                    <li class="page-item disabled">
+                                        <a class="page-link">Anterior</a>
+                                    </li>
+                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#">Posterior</a>
+                                    </li>
+                                </ul>
+                            </nav>
                         </div>
                     </div>
                 `;
-                document.getElementById('id_curso_buscar_interesado').value = curso.id_curso;
+                var localidad_filtro_interesados = document.getElementById("localidad_filtro_interesados"+curso.id_curso);
+                fetch("../controllers/listar_localidades.php")
+                .then((res) => res.json())
+                    .then((data) => {
+                        localidad_filtro_interesados.innerHTML += `
+                            <option value="" selected>Seleccionar localidad</option>
+                        `
+                        data.forEach((item) => {
+                            localidad_filtro_interesados.innerHTML += `
+                                <option id="curso_interes" value="${item.localidad}" class="curso_interes">${item.localidad}</option>
+                            `;
+                        });
+                    })
+                    .catch((error) => console.log(error));
                 data.forEach((item) => {
                     var form_interesados = new FormData();
                     form_interesados.append("id_interesado", item['id_interesado']);
@@ -197,22 +224,30 @@ const app_cursos = new function() {
                 })
             })
     };
-    this.buscar_interesados_curso = () => {
-        var form = new FormData();
-        form.append('id_curso', document.getElementById('id_curso_buscar_interesado').value);
-        form.append("nombre", document.getElementById("nombre_interesado_curso_search").value);
-        form.append("apellido", document.getElementById("apellido_interesado_curso_search").value);
-        if (form.get('nombre') != '' || form.get('apellido')) {
-            fetch("../controllers/buscar_interesados_curso.php", {
+    this.buscar_interesados_curso = (event) => {
+        event.preventDefault();
+        let form = event.currentTarget;
+        let formData = new FormData();
+        formData.append('id_curso', form.querySelector('#id_curso_buscar_interesado').value);
+        formData.append("nombre", form.querySelector('#nombre_interesado_curso_search').value);
+        formData.append("apellido", form.querySelector('#apellido_interesado_curso_search').value);
+        let localidad_elegida = form.querySelector("#localidad_filtro_interesados"+formData.get('id_curso')).selectedOptions;
+        let values = Array.from(localidad_elegida).map(({ value }) => value);
+        if (values != 'Seleccionar localidad') {
+            formData.append("localidad", values);
+        } else {
+            formData.append("localidad", "");
+        }
+        fetch("../controllers/buscar_interesados_curso.php", {
                 method: "POST",
-                body: form,
+                body: formData,
             })
-                .then((res) => res.json())
-                .then((data) => {
-                    this.buscar_interesados_por_curso = document.getElementById("buscar_interesados_por_curso"+curso.id_curso);
-                    this.buscar_interesados_por_curso.innerHTML = "";
-                    data.forEach((item) => {
-                        this.buscar_interesados_por_curso.innerHTML += `
+            .then((res) => res.json())
+            .then((data) => {
+                this.buscar_interesados_por_curso = document.getElementById("interesados_por_curso_datos" + form.querySelector('#id_curso_buscar_interesado').value);
+                this.buscar_interesados_por_curso.innerHTML = "";
+                data.forEach((item) => {
+                    this.buscar_interesados_por_curso.innerHTML += `
                                 <tr>
                                     <td>${item.id_interesado}</td>
                                     <td>${item.nombre}</td>
@@ -225,10 +260,9 @@ const app_cursos = new function() {
                                     <td>${item.fecharegistro}</td>
                                 </tr>
                             `;
-                    })
                 })
-                .catch((error) => console.log(error));
-        }
+            })
+            .catch((error) => console.log(error));
     };
 }
 app_cursos.listado();

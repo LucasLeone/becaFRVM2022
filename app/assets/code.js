@@ -1,6 +1,7 @@
 const app = new function() {
     this.tbody = document.getElementById("tbody");
     this.cursos_interes = document.getElementById("cursos_interes");
+    var localidades = Array();
 
     this.listado = () => {
         fetch("../controllers/listado.php")
@@ -43,6 +44,7 @@ const app = new function() {
             .catch((error) => console.log(error));
     };
     this.listar_localidades = () => {
+        this.localidades = []
         this.localidad_filtro = document.getElementById("localidad_filtro");
         this.localidad_filtro.innerHTML = "";
         fetch("../controllers/listar_localidades.php")
@@ -55,6 +57,7 @@ const app = new function() {
                     this.localidad_filtro.innerHTML += `
                     <option id="curso_interes" value="${item.localidad}" class="curso_interes">${item.localidad}</option>
                     `;
+                    this.localidades.push(item.localidad)
                 });
             })
             .catch((error) => console.log(error));
@@ -91,7 +94,6 @@ const app = new function() {
                         })
                             .then((res) => res.json())
                             .then((data) => {
-                                console.log(data)
                                 alert("Registrado el interes con exito");
                             })
                             .catch((error) => console.log(error));
@@ -109,6 +111,16 @@ const app = new function() {
             })
                 .then((res) => res.json())
                 .then((data) => {
+                    var form2 = new FormData();
+                    form2.append("id_interesado", document.getElementById("id_interesado").value);
+                    fetch("../controllers/editar_cursos_interes.php", {
+                        method: "POST",
+                        body: form2,
+                    })
+                        .then((res) => res.json())
+                        .then((data) => {
+                            console.log(data)
+                        })
                     alert("Actualizado con exito");
                     this.listado();
                     app_cursos.listado();

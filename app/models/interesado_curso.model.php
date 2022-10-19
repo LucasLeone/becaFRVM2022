@@ -31,16 +31,17 @@ class InteresadoCurso extends Connection
     }
     public static function buscarInteresadoCurso($data)
     {   
-        $sql = "SELECT * FROM public.interesados_curso WHERE id_curso = :id";
-        $stmt->bindParam(':id', $data['id_curso']);
+        $sql = "SELECT interesado.id_interesado, interesado.nombre, interesado.apellido, interesado.telefono, interesado.email, interesado.direccion, interesado.numero, interesado.localidad, interesado.dni FROM interesados_curso INNER JOIN interesado ON interesado.id_interesado = interesados_curso.id_interesado WHERE id_curso = :id_curso";
         $params = [];
+        $params['id_curso'] = $data['id_curso'];
         
-        foreach(['nombre','apellido'] as $campo) {
+        foreach(['nombre','apellido','localidad'] as $campo) {
             if(!empty($data[$campo])) {
-                $sql .= sprintf(' AND %s ~* :%s ',$campo, $campo);
+                $sql .= sprintf(' AND interesado.%s ~* :%s ', $campo, $campo);
                 $params[$campo] = $data[$campo];
             }
         }
+
         try {
             $stmt = Connection::getConnection()->prepare($sql);
             $stmt->execute($params);
