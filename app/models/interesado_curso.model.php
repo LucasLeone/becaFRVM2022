@@ -64,4 +64,17 @@ class InteresadoCurso extends Connection
             echo $th->getMessage();
         }
     }
+    public static function eliminarInteres($data)
+    {
+        try {
+            $sql = "DELETE FROM interesados_curso WHERE id_interesado = :id_interesado AND id_curso = :id_curso";
+            $stmt = Connection::getConnection()->prepare($sql);
+            $stmt->bindParam(':id_interesado', $data['id_interesado']);
+            $stmt->bindParam(':id_curso', $data['id_curso']);
+            $stmt->execute();
+            return true;
+        } catch (PDOException $th) {
+            echo $th->getMessage();
+        }
+    }
 }

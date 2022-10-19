@@ -164,6 +164,7 @@ const app_cursos = new function() {
                                         <th>Dirección</th>
                                         <th>Localidad</th>
                                         <th>DNI</th>
+                                        <th>Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody id="interesados_por_curso_datos${curso.id_curso}"></tbody>
@@ -210,6 +211,9 @@ const app_cursos = new function() {
                                     <td>${data["direccion"] + " " + data["numero"]}</td>
                                     <td>${data["localidad"]}</td>
                                     <td>${data["dni"]}</td>
+                                    <td>
+                                        <a href="javascript:;" class="btn btn-danger btn-sm" onclick="app_cursos.eliminar_interes(${curso.id_curso}, ${data['id_interesado']})">Eliminar interes</a>
+                                    </td>
                                 </tr>
                             `;
                         });
@@ -249,11 +253,28 @@ const app_cursos = new function() {
                                     <td>${item.direccion + " " + item.numero}</td>
                                     <td>${item.localidad}</td>
                                     <td>${item.dni}</td>
+                                    <td>
+                                        <a href="javascript:;" class="btn btn-danger btn-sm" onclick="app_cursos.eliminar_interes(${form.querySelector('#id_curso_buscar_interesado').value}, ${item.id_interesado})">Eliminar interes</a>
+                                    </td>
                                 </tr>
                             `;
                 })
             })
             .catch((error) => console.log(error));
     };
+    this.eliminar_interes = (id_curso, id_interesado) => {
+        let form = new FormData();
+        form.append('id_curso', id_curso);
+        form.append('id_interesado', id_interesado);
+        fetch('../controllers/eliminar_interes_curso.php', {
+            method: "POST",
+            body: form,
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                alert("Interes eliminado con exito");
+                this.listado();
+            })
+    }
 }
 app_cursos.listado();

@@ -82,9 +82,10 @@ const app = new function() {
             })
                 .then((res) => res.json())
                 .then((data) => {
-                    console.log(data);
                     alert("Creado con exito");
+                    cursos_que_esta_interesado = [];
                     values.forEach((item) => {
+                        cursos_que_esta_interesado.push(item);
                         var form_interes = new FormData();
                         form_interes.append("id_interesado", data['id_interesado']);
                         form_interes.append("id_curso", item);
@@ -113,14 +114,21 @@ const app = new function() {
                 .then((data) => {
                     var form2 = new FormData();
                     form2.append("id_interesado", document.getElementById("id_interesado").value);
-                    fetch("../controllers/editar_cursos_interes.php", {
-                        method: "POST",
-                        body: form2,
+                    values.forEach((item) => {
+                        console.log(cursos_que_esta_interesado)
+                        console.log(item)
+                        if (!(item in cursos_que_esta_interesado)) {
+                            form2.append('id_curso', item);
+                            fetch("../controllers/actualizar_interes_curso.php", {
+                                method: "POST",
+                                body: form2,
+                            })
+                                .then((res) => res.json())
+                                .then((data) => {
+                                    alert("Interes actualizado con exito!")
+                                })
+                        }
                     })
-                        .then((res) => res.json())
-                        .then((data) => {
-                            console.log(data)
-                        })
                     alert("Actualizado con exito");
                     this.listado();
                     app_cursos.listado();
@@ -160,7 +168,6 @@ const app = new function() {
                         let element = document.getElementById("cursos_interes");
                         data.forEach((item) => {
                             element.querySelector("option[value='"+ item.id_curso + "']").selected = true;
-                            // element.value = item.id_curso;
                         })
                     })
                     .catch((error) => console.log(error));
