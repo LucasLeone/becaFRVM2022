@@ -2,11 +2,12 @@
 require_once "../config/connection.php";
 class Interesado extends Connection
 {
-    public static function mostrarDatos()
+    public static function mostrarDatos($cantidad)
     {
         try {
-            $sql = "SELECT * FROM public.interesado";
+            $sql = "SELECT * FROM public.interesado LIMIT :cantidad";
             $stmt = Connection::getConnection()->prepare($sql);
+            $stmt->bindParam(':cantidad', $cantidad);
             $stmt->execute();
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
             return $result;
@@ -78,8 +79,10 @@ class Interesado extends Connection
                 $params[$campo] = $data[$campo];
             }
         }
+        $sql .= ' LIMIT :cantidad';
         try {
             $stmt = Connection::getConnection()->prepare($sql);
+            $stmt->bindParam(':cantidad', $data['cantidad']);
             $stmt->execute($params);
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
             return $result;

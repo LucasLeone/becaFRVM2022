@@ -82,9 +82,14 @@
                             <input type="text" class="form-control" id="apellido_search" placeholder="Apellido" autofocus />
                         </div>
                         <button class="btn btn-outline-success me-2" type="submit">Buscar</button>
-                        <button class="btn btn-outline-warning" type="reset">Limpiar</button>
+                        <button class="btn btn-outline-warning" type="reset" onclick="app.listado()">Limpiar</button>
                         <label for="localidad_filtro" class="ms-5">Localidad</label>
                         <select class="form-select ms-2 w-25" name="localidad_filtro" id="localidad_filtro">
+                        </select>
+                        <select class="form-select ms-1" style="width: 10%;" name="cant_listado" id="cant_listado">
+                            <option value="1">1</option>
+                            <option value="20">20</option>
+                            <option value="30">30</option>
                         </select>
                     </form>
                 </div>

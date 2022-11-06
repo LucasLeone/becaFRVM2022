@@ -4,7 +4,12 @@ const app = new function() {
     var localidades = Array();
 
     this.listado = () => {
-        fetch("../controllers/listado.php")
+        var form = new FormData();
+        form.append("cantidad", document.getElementById("cant_listado").value);
+        fetch("../controllers/listado.php", {
+            method: "POST",
+            body: form,
+        })
             .then((res) => res.json())
             .then((data) => {
                 this.tbody.innerHTML = "";
@@ -83,7 +88,6 @@ const app = new function() {
                 .then((res) => res.json())
                 .then((data) => {
                     alert("Creado con exito");
-                    cursos_que_esta_interesado = [];
                     values.forEach((item) => {
                         cursos_que_esta_interesado.push(item);
                         var form_interes = new FormData();
@@ -112,23 +116,6 @@ const app = new function() {
             })
                 .then((res) => res.json())
                 .then((data) => {
-                    var form2 = new FormData();
-                    form2.append("id_interesado", document.getElementById("id_interesado").value);
-                    values.forEach((item) => {
-                        console.log(cursos_que_esta_interesado)
-                        console.log(item)
-                        if (!(item in cursos_que_esta_interesado)) {
-                            form2.append('id_curso', item);
-                            fetch("../controllers/actualizar_interes_curso.php", {
-                                method: "POST",
-                                body: form2,
-                            })
-                                .then((res) => res.json())
-                                .then((data) => {
-                                    alert("Interes actualizado con exito!")
-                                })
-                        }
-                    })
                     alert("Actualizado con exito");
                     this.listado();
                     app_cursos.listado();
@@ -197,6 +184,8 @@ const app = new function() {
         var localidad_elegida = document.getElementById("localidad_filtro").selectedOptions;
         var values = Array.from(localidad_elegida).map(({ value }) => value);
         form.append("localidad", values);
+        var form = new FormData();
+        form.append("cantidad", document.getElementById("cant_listado").value);
         fetch("../controllers/buscar_interesado.php", {
             method: "POST",
             body: form,
